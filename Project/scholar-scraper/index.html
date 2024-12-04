@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scholar Scraper</title>
+</head>
+<body>
+    <h1>Scholar Scraper</h1>
+    <form id="search-form">
+        <label for="keywords">Enter Keywords:</label>
+        <input type="text" id="keywords" name="keywords" required>
+        <button type="submit">Search</button>
+    </form>
+    <h2>Articles:</h2>
+    <ul id="articles"></ul>
+
+    <script>
+        document.getElementById('search-form').addEventListener('submit', async (event) => {
+            event.preventDefault();
+            const keywords = document.getElementById('keywords').value;
+            const response = await fetch('/search', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ keywords })
+            });
+            const data = await response.json();
+            const articlesList = document.getElementById('articles');
+            articlesList.innerHTML = '';
+            data.articles.forEach(article => {
+                const li = document.createElement('li');
+                li.textContent = article;
+                articlesList.appendChild(li);
+            });
+        });
+    </script>
+</body>
+</html>
