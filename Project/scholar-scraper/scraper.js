@@ -12,9 +12,15 @@ async function scrapeGoogleScholar(keywords) {
         //scrapes the title
         //put a limit to how much articles are generated from one keyword (between 5-10)
         $('.gs_rt a').each((index, element) => {
+            if (articleCount >= 10){
+                return false;
+            } 
             const title = $(element).text();
-            articles.push(title);
+            const link = $(element).attr('href');
+            const citation = $(element).closest('div.gs_ri').find('.gs_a').text();
+            articles.push({title, link, citation})
             articleCount += 1; //How many articles have been scraped. Shouldnt be higher than 20
+            
         });
 
         return articles;
@@ -30,8 +36,8 @@ async function scrapeGoogleScholar(keywords) {
 //You can update the keyword function here to check the article generation in the terminal
 (async () => {
     const keywords = 'Example'; //Example Keywords
-    const articles = await scrapeGoogleScholar(keywords);
-    console.log(articles);
+    //const articles = await scrapeGoogleScholar(keywords);
+    //console.log(articles);
 })();
 
 module.exports = { scrapeGoogleScholar };
