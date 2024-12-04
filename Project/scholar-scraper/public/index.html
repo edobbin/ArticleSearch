@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Scholar Search</title>
+</head>
+<body>
+    <h1>Google Scholar Search</h1>
+    <form id="searchForm">
+        <label for="keywords">Enter Keywords:</label>
+        <input type="text" id="keywords" name="keywords" required>
+        <button type="submit">Search</button>
+    </form>
+    <div id="results"></div>
+
+    <script>
+        document.getElementById('searchForm').addEventListener('submit', async function(event) {
+            event.preventDefault(); // Prevent the default form submission
+
+            const keywords = document.getElementById('keywords').value;
+            const response = await fetch('/search', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ keywords })
+            });
+
+            const data = await response.json();
+            displayResults(data.articles);
+        });
+
+        function displayResults(articles) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if (articles.length === 0) {
+                resultsDiv.innerHTML = '<p>No articles found.</p>';
+            } else {
+                const ul = document.createElement('ul');
+                articles.forEach(article => {
+                    const li = document.createElement('li');
+                    li.textContent = article;
+                    ul.appendChild(li);
+                });
+                resultsDiv.appendChild(ul);
+            }
+        }
+    </script>
+</body>
+</html>

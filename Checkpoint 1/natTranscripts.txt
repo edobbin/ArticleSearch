@@ -1,0 +1,14 @@
+list the potential alternate case steps and exception case steps
+ChatGPT said:
+The document outlines a process for conducting a literature review, split into two key processes: Article Search and Article Analysis. Based on the steps described, here are potential alternate case steps and exception case steps:
+Article Search Process
+Alternate Case Steps
+Use of alternate research repositories: If Google Scholar does not provide enough results, the user might turn to other databases like PubMed, IEEE Xplore, or JSTOR.
+Adjusting keywords: After scanning the first batch of articles, the user refines the keyword search to include synonyms or more specific terms to narrow or broaden the search.
+Expanding the search scope: If not enough relevant articles are found within the first two pages of results, the user may consider looking at additional pages or trying another research database.
+Exception Case Steps
+Unavailability of articles:
+The article is not downloadable directly: The user uses the library's link to check for access through Towson University or other sources.
+If access remains unavailable: The user notes the citation details for later retrieval.
+Low relevance of results: If most results are irrelevant, the user rethinks the search strategy, possibly redefining the research question or goals.
+Technical difficulties: If access to Google Scholar or the library database is interrupted, the process is paused until access is restored or another repository is used.
