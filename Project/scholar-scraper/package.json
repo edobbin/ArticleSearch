@@ -17,6 +17,9 @@
     "dependencies": {
         "axios": "^1.7.9",
         "cheerio": "^1.0.0",
-        "express": "^4.21.1"
+        "dotenv": "^16.4.7",
+        "express": "^4.21.1",
+        "google-search-results-nodejs": "^2.1.0",
+        "xlsx": "^0.18.5"
     }
 }

@@ -7,31 +7,61 @@
 </head>
 <body>
     <h1>Scholar Scraper</h1>
-    <form id="search-form">
-        <label for="keywords">Enter Keywords:</label>
-        <input type="text" id="keywords" name="keywords" required>
-        <button type="submit">Search</button>
-    </form>
-    <h2>Articles:</h2>
+    <input type="text" id="keywords" placeholder="Enter search keywords">
+    <button id="search-btn">Search</button>
+    <button id="export-btn">Export to Excel</button>
+
+    <h2>Search Results</h2>
     <ul id="articles"></ul>
 
     <script>
-        document.getElementById('search-form').addEventListener('submit', async (event) => {
-            event.preventDefault();
+        document.getElementById('search-btn').addEventListener('click', async () => {
             const keywords = document.getElementById('keywords').value;
+
             const response = await fetch('/search', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ keywords })
+                body: JSON.stringify({ keywords }),
             });
-            const data = await response.json();
-            const articlesList = document.getElementById('articles');
-            articlesList.innerHTML = '';
-            data.articles.forEach(article => {
-                const li = document.createElement('li');
-                li.textContent = article;
-                articlesList.appendChild(li);
+
+            if (response.ok) {
+                const data = await response.json();
+                const articlesList = document.getElementById('articles');
+                articlesList.innerHTML = '';
+
+                data.articles.forEach((article) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${article.title} (Similarity: ${article.similarityScore})`;
+                    articlesList.appendChild(li);
+                });
+
+                // Save the articles for export
+                localStorage.setItem('articles', JSON.stringify(data.articles));
+            } else {
+                alert('Search failed.');
+            }
+        });
+
+        document.getElementById('export-btn').addEventListener('click', async () => {
+            const articles = JSON.parse(localStorage.getItem('articles') || '[]');
+
+            if (articles.length === 0) {
+                alert('No articles to export. Perform a search first.');
+                return;
+            }
+
+            const response = await fetch('/export', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ articles }),
             });
+
+            if (response.ok) {
+                const result = await response.json();
+                alert(`Export successful! File saved at: ${result.filePath}`);
+            } else {
+                alert('Failed to export articles.');
+            }
         });
     </script>
 </body>
